@@ -21,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextNumber;
     private EditText whatDidYouSpendOnInput;
     private TextView totalTextView;
-    private ListView listView;
-    private double totalExpense = 0.0;
     private ArrayList<String> expenseList;
     private ArrayAdapter<String> adapter;
     // this is our database class
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         editTextNumber = findViewById(R.id.howMuchDidYouSpend);
         whatDidYouSpendOnInput = findViewById(R.id.whatDidYouSpendOnInput);
         totalTextView = findViewById(R.id.totalTextView);
-        listView = findViewById(R.id.listView);
+        ListView listView = findViewById(R.id.listView);
         Button button = findViewById(R.id.button);
         Button clearButton = findViewById(R.id.clearButton);
 
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         expenseList.addAll(db.getAllExpenses());
         adapter.notifyDataSetChanged();
 
-        totalExpense = db.getTotalExpenses();
+        double totalExpense = db.getTotalExpenses();
         totalTextView.setText(String.format("%s€", totalExpense));
     }
 
