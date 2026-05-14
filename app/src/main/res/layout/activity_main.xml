@@ -10,131 +10,208 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
         android:orientation="vertical"
         android:padding="16dp"
+        android:background="@color/background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/title"
-            android:textSize="30sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/bg_container"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="16dp">
 
-            <EditText
-                android:id="@+id/amountInput"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:hint="@string/amount"
-                android:inputType="numberDecimal" />
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/amountInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
 
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/expenseRadio"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:checked="true"
+                    android:textColor="@color/black"
                     android:text="@string/expense" />
 
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/incomeRadio"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
                     android:text="@string/income" />
             </RadioGroup>
 
+            <TextView
+                android:id="@+id/categoryLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category_label"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="4dp" />
             <Spinner
                 android:id="@+id/categorySpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="48dp"
+                android:layout_marginBottom="8dp" />
 
-            <EditText
-                android:id="@+id/descriptionInput"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:hint="@string/description_source"
-                android:inputType="text" />
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/descriptionInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <Button
             android:id="@+id/saveButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/save_transaction" />
+            android:text="@string/save_transaction"
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/white"
+            android:stateListAnimator="@null"
+            android:elevation="0dp" />
 
         <Button
             android:id="@+id/clearButton"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/clear_all_transactions" />
+            android:text="@string/clear_all_transactions"
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:textColor="@color/expense_text" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/bg_container"
-            android:padding="4dp">
+            android:layout_marginBottom="4dp"
+            android:baselineAligned="false"
+            android:gravity="center">
 
-            <TextView
-                android:id="@+id/totalIncomeText"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_margin="2dp"
-                android:padding="8dp"
+                android:orientation="vertical"
+                android:layout_margin="4dp"
+                android:padding="12dp"
                 android:background="@drawable/bg_income"
-                android:textColor="@color/black"
-                android:text="@string/total_income_0" />
+                android:gravity="center">
 
-            <TextView
-                android:id="@+id/totalExpenseText"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/income_label"
+                    android:textSize="12sp"
+                    android:textColor="@color/income_text" />
+
+                <TextView
+                    android:id="@+id/totalIncomeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/income_text"
+                    android:textStyle="bold"
+                    android:text="@string/total_income" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_margin="2dp"
-                android:textColor="@color/black"
-                android:padding="8dp"
+                android:orientation="vertical"
+                android:layout_margin="4dp"
+                android:padding="12dp"
                 android:background="@drawable/bg_expense"
-                android:text="@string/total_expenses_0" />
+                android:gravity="center">
 
-            <TextView
-                android:id="@+id/balanceText"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/expense_label"
+                    android:textSize="12sp"
+                    android:textColor="@color/expense_text" />
+
+                <TextView
+                    android:id="@+id/totalExpenseText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/expense_text"
+                    android:textStyle="bold"
+                    android:text="@string/total_expenses" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_margin="2dp"
-                android:textColor="@color/black"
-                android:padding="8dp"
+                android:orientation="vertical"
+                android:layout_margin="4dp"
+                android:padding="12dp"
                 android:background="@drawable/bg_balance"
-                android:text="@string/balance_0" />
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/balance_label"
+                    android:textSize="12sp"
+                    android:textColor="@color/balance_text" />
+
+                <TextView
+                    android:id="@+id/balanceText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/balance_text"
+                    android:textStyle="bold"
+                    android:text="@string/balance" />
+            </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recent_transactions"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
 
         <ListView
             android:id="@+id/transactionListView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:background="@drawable/bg_transactions"
+            android:layout_weight="1"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="8dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

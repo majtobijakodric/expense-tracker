@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#212121</color>
+    <color name="white">#FFFFFF</color>
+    <color name="primary">#3F51B5</color>
+    <color name="primary_dark">#303F9F</color>
+    <color name="background">#F8F9FA</color>
+    <color name="border">#E0E0E0</color>
+
+    <color name="income_bg">#E8F5E9</color>
+    <color name="income_text">#2E7D32</color>
+
+    <color name="expense_bg">#FFEBEE</color>
+    <color name="expense_text">#C62828</color>
+
+    <color name="balance_bg">#E3F2FD</color>
+    <color name="balance_text">#1565C0</color>
 </resources>

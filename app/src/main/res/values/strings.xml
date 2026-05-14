@@ -2,7 +2,7 @@
     <string name="app_name">ExpenseTracker</string>
     <string name="income">Income</string>
     <string name="expense">Expense</string>
-    <string name="description_source">Description / Source</string>
+    <string name="description_source">Description</string>
     <string name="save_transaction">Save Transaction</string>
     <string name="total_income_0">Total income: 0€</string>
     <string name="total_expenses_0">Total expenses: 0€</string>
@@ -10,4 +10,12 @@
     <string name="amount">Amount</string>
     <string name="title">Expense Tracker</string>
     <string name="clear_all_transactions">Clear All Transactions</string>
+    <string name="total_income">0.00€</string>
+    <string name="total_expenses">0.00€</string>
+    <string name="balance">0.00€</string>
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="income_label">Income</string>
+    <string name="expense_label">Expense</string>
+    <string name="balance_label">Balance</string>
+    <string name="category_label">Category</string>
 </resources>
