@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         transactionListView.setAdapter(adapter);
     }
 
+    //
     public void saveTransaction() {
         String amountText = amountInput.getText().toString().trim();
         String description = descriptionInput.getText().toString().trim();
