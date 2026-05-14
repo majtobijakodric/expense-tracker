@@ -106,9 +106,9 @@ public class MainActivity extends AppCompatActivity {
         double totalExpense = databaseHelpers.getTotalExpense();
         double balance = databaseHelpers.getBalance();
 
-        totalIncomeText.setText("Total income: " + totalIncome + "€");
-        totalExpenseText.setText("Total expenses: " + totalExpense + "€");
-        balanceText.setText("Balance: " + balance + "€");
+        totalIncomeText.setText(String.format("Total income: %.2f€", totalIncome));
+        totalExpenseText.setText(String.format("Total expenses: %.2f€", totalExpense));
+        balanceText.setText(String.format("Balance: %.2f€", balance));
 
         ArrayList<String> transactions = databaseHelpers.getAllTransactions();
 

@@ -82,9 +82,9 @@ public class DatabaseHelpers extends SQLiteOpenHelper {
                 String displayString;
 
                 if (type.equals(TYPE_EXPENSE)) {
-                    displayString = category + " | " + description + " | -" + amount + "€";
+                    displayString = String.format("%s | %s | -%.2f€", category, description, amount);
                 } else {
-                    displayString = "Income | " + description + " | +" + amount + "€";
+                    displayString = String.format("Income | %s | +%.2f€", description, amount);
                 }
 
                 transactionList.add(displayString);
