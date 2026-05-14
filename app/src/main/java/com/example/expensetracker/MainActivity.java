@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner categorySpinner;
 
     Button saveButton;
+    Button clearButton;
 
     TextView totalIncomeText;
     TextView totalExpenseText;
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         categorySpinner = findViewById(R.id.categorySpinner);
 
         saveButton = findViewById(R.id.saveButton);
+        clearButton = findViewById(R.id.clearButton);
 
         totalIncomeText = findViewById(R.id.totalIncomeText);
         totalExpenseText = findViewById(R.id.totalExpenseText);
@@ -97,6 +99,12 @@ public class MainActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener(v -> saveTransaction());
 
+        clearButton.setOnClickListener(v -> {
+            databaseHelpers.deleteAllTransactions();
+            refreshOverview();
+            Toast.makeText(this, "All transactions deleted", Toast.LENGTH_SHORT).show();
+        });
+
         // remove old data after saving a transaction
         refreshOverview();
     }
@@ -105,10 +113,6 @@ public class MainActivity extends AppCompatActivity {
         double totalIncome = databaseHelpers.getTotalIncome();
         double totalExpense = databaseHelpers.getTotalExpense();
         double balance = databaseHelpers.getBalance();
-
-        totalIncomeText.setText(String.format("Total income: %.2f€", totalIncome));
-        totalExpenseText.setText(String.format("Total expenses: %.2f€", totalExpense));
-        balanceText.setText(String.format("Balance: %.2f€", balance));
 
         ArrayList<String> transactions = databaseHelpers.getAllTransactions();
 

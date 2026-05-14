@@ -72,6 +72,12 @@
             android:layout_height="wrap_content"
             android:text="@string/save_transaction" />
 
+        <Button
+            android:id="@+id/clearButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/clear_all_transactions" />
+
         <TextView
             android:id="@+id/totalIncomeText"
             android:layout_width="match_parent"

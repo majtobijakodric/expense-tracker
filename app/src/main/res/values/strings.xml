@@ -9,4 +9,5 @@
     <string name="balance_0">Balance: 0€</string>
     <string name="amount">Amount</string>
     <string name="title">Expense Tracker</string>
+    <string name="clear_all_transactions">Clear All Transactions</string>
 </resources>
