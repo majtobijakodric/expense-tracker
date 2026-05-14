@@ -114,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
         double totalExpense = databaseHelpers.getTotalExpense();
         double balance = databaseHelpers.getBalance();
 
+        totalIncomeText.setText(String.format("%.2f", totalIncome));
+        totalExpenseText.setText(String.format("%.2f", totalExpense));
+        balanceText.setText(String.format("%.2f", balance));
+
         ArrayList<String> transactions = databaseHelpers.getAllTransactions();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
