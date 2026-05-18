@@ -1,13 +1,20 @@
 package com.example.expensetracker;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,11 +37,10 @@ public class MainActivity extends AppCompatActivity {
     RadioButton expenseRadio;
     RadioButton incomeRadio;
 
-    Spinner categorySpinner;
-    TextView categoryLabel;
+    AutoCompleteTextView categorySpinner;
+    View categoryContainer;
 
     Button saveButton;
-    Button clearButton;
 
     TextView totalIncomeText;
     TextView totalExpenseText;
@@ -63,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
         incomeRadio = findViewById(R.id.incomeRadio);
 
         categorySpinner = findViewById(R.id.categorySpinner);
+        categoryContainer = findViewById(R.id.categoryContainer);
 
         saveButton = findViewById(R.id.saveButton);
-        clearButton = findViewById(R.id.clearButton);
 
         totalIncomeText = findViewById(R.id.totalIncomeText);
         totalExpenseText = findViewById(R.id.totalExpenseText);
@@ -95,19 +101,22 @@ public class MainActivity extends AppCompatActivity {
         categorySpinner.setAdapter(adapter);
 
         // hide category when you select income
-        expenseRadio.setOnClickListener(v -> categorySpinner.setVisibility(View.VISIBLE));
-        incomeRadio.setOnClickListener(v -> categorySpinner.setVisibility(View.GONE));
+        expenseRadio.setOnClickListener(v -> updateTransactionTypeUi());
+        incomeRadio.setOnClickListener(v -> updateTransactionTypeUi());
+        updateTransactionTypeUi();
 
         saveButton.setOnClickListener(v -> saveTransaction());
 
-        clearButton.setOnClickListener(v -> {
-            databaseHelpers.deleteAllTransactions();
-            refreshOverview();
-            Toast.makeText(this, "All transactions deleted", Toast.LENGTH_SHORT).show();
-        });
-
         // remove old data after saving a transaction
         refreshOverview();
+    }
+
+    private void updateTransactionTypeUi() {
+        if (expenseRadio.isChecked()) {
+            categoryContainer.setVisibility(View.VISIBLE);
+        } else {
+            categoryContainer.setVisibility(View.GONE);
+        }
     }
 
     private void refreshOverview() {
@@ -121,11 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<String> transactions = databaseHelpers.getAllTransactions();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                R.layout.simple_transaction_item,
-                transactions
-        );
+        ArrayAdapter<String> adapter = new TransactionAdapter(this, transactions);
 
         transactionListView.setAdapter(adapter);
     }
@@ -164,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (expenseRadio.isChecked()) {
             type = DatabaseHelpers.TYPE_EXPENSE;
-            category = categorySpinner.getSelectedItem().toString();
+            category = categorySpinner.getText().toString();
         } else {
             type = DatabaseHelpers.TYPE_INCOME;
             category = "";
@@ -176,10 +181,118 @@ public class MainActivity extends AppCompatActivity {
         amountInput.setText("");
         descriptionInput.setText("");
         expenseRadio.setChecked(true);
+        updateTransactionTypeUi();
 
         Toast.makeText(this, "Transaction saved", Toast.LENGTH_SHORT).show();
 
         refreshOverview();
+    }
+
+    private static class TransactionAdapter extends ArrayAdapter<String> {
+
+        TransactionAdapter(Context context, ArrayList<String> transactions) {
+            super(context, R.layout.transaction_item, transactions);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = convertView;
+            if (view == null) {
+                view = LayoutInflater.from(getContext()).inflate(R.layout.transaction_item, parent, false);
+            }
+
+            String transaction = getItem(position);
+            String title = "";
+            String amount = "";
+
+            if (transaction != null) {
+                String[] parts = transaction.split("\\n", 2);
+                title = parts[0];
+                if (parts.length > 1) {
+                    amount = parts[1];
+                }
+            }
+
+            String category = getCategoryFromTitle(title);
+            boolean isIncome = amount.startsWith("+") || category.equals("Income");
+
+            ImageView icon = view.findViewById(R.id.transactionIcon);
+            TextView titleText = view.findViewById(R.id.transactionTitle);
+            TextView subtitleText = view.findViewById(R.id.transactionSubtitle);
+            TextView amountText = view.findViewById(R.id.transactionAmount);
+
+            titleText.setText(title);
+            subtitleText.setText(category);
+            amountText.setText(amount);
+            amountText.setTextColor(isIncome ? Color.parseColor("#2E7D32") : Color.parseColor("#1A1A1A"));
+
+            int iconColor = getIconColor(category, isIncome);
+            icon.setImageResource(getIconResource(category, isIncome));
+            icon.setImageTintList(ColorStateList.valueOf(iconColor));
+            icon.setBackground(createCircle(getCircleColor(category, isIncome)));
+
+            return view;
+        }
+
+        private static String getCategoryFromTitle(String title) {
+            int divider = title.indexOf(":");
+            if (divider > 0) {
+                return title.substring(0, divider);
+            }
+            return title;
+        }
+
+        private static int getIconResource(String category, boolean isIncome) {
+            if (isIncome) {
+                return R.drawable.ic_trending_up;
+            }
+            if (category.equals("Food")) {
+                return R.drawable.ic_food;
+            }
+            if (category.equals("School")) {
+                return R.drawable.ic_school;
+            }
+            if (category.equals("Travel")) {
+                return R.drawable.ic_travel;
+            }
+            if (category.equals("Subscriptions")) {
+                return R.drawable.ic_subscriptions;
+            }
+            return R.drawable.ic_other;
+        }
+
+        private static int getCircleColor(String category, boolean isIncome) {
+            if (isIncome || category.equals("Food")) {
+                return Color.parseColor("#E8F5E9");
+            }
+            if (category.equals("School")) {
+                return Color.parseColor("#EDE9FF");
+            }
+            if (category.equals("Travel")) {
+                return Color.parseColor("#E3F2FD");
+            }
+            return Color.parseColor("#FFF3E0");
+        }
+
+        private static int getIconColor(String category, boolean isIncome) {
+            if (isIncome || category.equals("Food")) {
+                return Color.parseColor("#2E7D32");
+            }
+            if (category.equals("School")) {
+                return Color.parseColor("#4B2FD4");
+            }
+            if (category.equals("Travel")) {
+                return Color.parseColor("#1565C0");
+            }
+            return Color.parseColor("#E65100");
+        }
+
+        private static GradientDrawable createCircle(int color) {
+            GradientDrawable drawable = new GradientDrawable();
+            drawable.setShape(GradientDrawable.OVAL);
+            drawable.setColor(color);
+            return drawable;
+        }
     }
 
 }

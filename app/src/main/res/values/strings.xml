@@ -18,4 +18,5 @@
     <string name="expense_label">Expense</string>
     <string name="balance_label">Balance</string>
     <string name="category_label">Category</string>
+    <string name="expenses_tracker">Expenses tracker</string>
 </resources>

@@ -2,10 +2,14 @@
 <resources>
     <color name="black">#212121</color>
     <color name="white">#FFFFFF</color>
-    <color name="primary">#3F51B5</color>
-    <color name="primary_dark">#303F9F</color>
-    <color name="background">#F8F9FA</color>
+    <color name="primary">#4B2FD4</color>
+    <color name="primary_dark">#3821A8</color>
+    <color name="background">#FAFAFA</color>
     <color name="border">#E0E0E0</color>
+    <color name="muted_text">#6F6F82</color>
+    <color name="soft_lavender">#EDE9FF</color>
+    <color name="soft_blue">#E3F2FD</color>
+    <color name="soft_orange">#FFF3E0</color>
 
     <color name="income_bg">#E8F5E9</color>
     <color name="income_text">#2E7D32</color>
@@ -13,6 +17,6 @@
     <color name="expense_bg">#FFEBEE</color>
     <color name="expense_text">#C62828</color>
 
-    <color name="balance_bg">#E3F2FD</color>
-    <color name="balance_text">#1565C0</color>
+    <color name="balance_bg">#EDE9FF</color>
+    <color name="balance_text">#4B2FD4</color>
 </resources>
