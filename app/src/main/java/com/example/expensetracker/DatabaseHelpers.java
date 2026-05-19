@@ -69,8 +69,7 @@ public class DatabaseHelpers extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(
                 "SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMN_ID + " DESC",
-                null
-        );
+                null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -118,8 +117,7 @@ public class DatabaseHelpers extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(
                 "SELECT SUM(" + COLUMN_AMOUNT + ") FROM " + TABLE_NAME +
                         " WHERE " + COLUMN_TYPE + " = '" + type + "'",
-                null
-        );
+                null);
 
         if (cursor.moveToFirst()) {
             total = cursor.getDouble(0);

@@ -19,6 +19,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     DatabaseHelpers databaseHelpers;
@@ -85,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
-                categories
-        );
+                categories);
 
         // says to the spinner how it should show data
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -135,11 +135,7 @@ public class MainActivity extends AppCompatActivity {
         balanceText.setText(String.format("%.2f", balance) + "€");
 
         ArrayList<String> transactions = databaseHelpers.getAllTransactions();
-        
-        // Show only last 5 transactions in main activity if needed, but for now just showing all as before
-        // The user didn't ask to limit it, but usually main page shows recent ones.
-        // Let's keep it as is or limit to 5.
-        
+
         ArrayList<String> recentTransactions = new ArrayList<>();
         for (int i = 0; i < Math.min(transactions.size(), 5); i++) {
             recentTransactions.add(transactions.get(i));
@@ -203,4 +199,3 @@ public class MainActivity extends AppCompatActivity {
         refreshOverview();
     }
 }
-

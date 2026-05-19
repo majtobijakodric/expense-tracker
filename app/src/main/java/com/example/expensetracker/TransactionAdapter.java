@@ -31,6 +31,7 @@ public class TransactionAdapter extends ArrayAdapter<String> {
         String amount = "";
 
         if (transaction != null) {
+            // splits where \n and returns only 2 elements
             String[] parts = transaction.split("\\n", 2);
             title = parts[0];
             if (parts.length > 1) {
