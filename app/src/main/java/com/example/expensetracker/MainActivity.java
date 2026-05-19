@@ -110,6 +110,13 @@ public class MainActivity extends AppCompatActivity {
         refreshOverview();
     }
 
+    @Override
+    protected void onResume() {
+        // when you come back from allTransactions it doesn't clear the old transactions
+        super.onResume();
+        refreshOverview();
+    }
+
     private void updateTransactionTypeUi() {
         if (expenseRadio.isChecked()) {
             categoryContainer.setVisibility(View.VISIBLE);

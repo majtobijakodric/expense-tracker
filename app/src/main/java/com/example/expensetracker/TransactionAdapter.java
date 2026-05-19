@@ -71,17 +71,16 @@ public class TransactionAdapter extends ArrayAdapter<String> {
         if (isIncome) {
             return R.drawable.ic_trending_up;
         }
-        if (category.equals("Food")) {
-            return R.drawable.ic_food;
-        }
-        if (category.equals("School")) {
-            return R.drawable.ic_school;
-        }
-        if (category.equals("Travel")) {
-            return R.drawable.ic_travel;
-        }
-        if (category.equals("Subscriptions")) {
-            return R.drawable.ic_subscriptions;
+
+        switch (category) {
+            case "Food":
+                return R.drawable.ic_food;
+            case "School":
+                return R.drawable.ic_school;
+            case "Travel":
+                return R.drawable.ic_travel;
+            case "Subscriptions":
+                return R.drawable.ic_subscriptions;
         }
         return R.drawable.ic_other;
     }
