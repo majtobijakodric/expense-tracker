@@ -140,7 +140,7 @@ expense-tracker/
 
 ## Author
 
-**Maj Tobija Kodric**
+**Maj Tobija Kodrič**
 
 ---
 
