@@ -1,18 +1,12 @@
 package com.example.expensetracker;
 
-import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -25,8 +19,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
-
-
 public class MainActivity extends AppCompatActivity {
 
     DatabaseHelpers databaseHelpers;
@@ -47,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     TextView balanceText;
 
     ListView transactionListView;
+    TextView seeAllText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         balanceText = findViewById(R.id.balanceText);
 
         transactionListView = findViewById(R.id.transactionListView);
+        seeAllText = findViewById(R.id.seeAllText);
 
         // add spending categories
         ArrayList<String> categories = new ArrayList<>();
@@ -107,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
 
         saveButton.setOnClickListener(v -> saveTransaction());
 
+        seeAllText.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AllTransactionsActivity.class);
+            startActivity(intent);
+        });
+
         // remove old data after saving a transaction
         refreshOverview();
     }
@@ -129,8 +128,17 @@ public class MainActivity extends AppCompatActivity {
         balanceText.setText(String.format("%.2f", balance) + "€");
 
         ArrayList<String> transactions = databaseHelpers.getAllTransactions();
+        
+        // Show only last 5 transactions in main activity if needed, but for now just showing all as before
+        // The user didn't ask to limit it, but usually main page shows recent ones.
+        // Let's keep it as is or limit to 5.
+        
+        ArrayList<String> recentTransactions = new ArrayList<>();
+        for (int i = 0; i < Math.min(transactions.size(), 5); i++) {
+            recentTransactions.add(transactions.get(i));
+        }
 
-        ArrayAdapter<String> adapter = new TransactionAdapter(this, transactions);
+        TransactionAdapter adapter = new TransactionAdapter(this, recentTransactions);
 
         transactionListView.setAdapter(adapter);
     }
@@ -187,112 +195,5 @@ public class MainActivity extends AppCompatActivity {
 
         refreshOverview();
     }
-
-    private static class TransactionAdapter extends ArrayAdapter<String> {
-
-        TransactionAdapter(Context context, ArrayList<String> transactions) {
-            super(context, R.layout.transaction_item, transactions);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = convertView;
-            if (view == null) {
-                view = LayoutInflater.from(getContext()).inflate(R.layout.transaction_item, parent, false);
-            }
-
-            String transaction = getItem(position);
-            String title = "";
-            String amount = "";
-
-            if (transaction != null) {
-                String[] parts = transaction.split("\\n", 2);
-                title = parts[0];
-                if (parts.length > 1) {
-                    amount = parts[1];
-                }
-            }
-
-            String category = getCategoryFromTitle(title);
-            boolean isIncome = amount.startsWith("+") || category.equals("Income");
-
-            ImageView icon = view.findViewById(R.id.transactionIcon);
-            TextView titleText = view.findViewById(R.id.transactionTitle);
-            TextView subtitleText = view.findViewById(R.id.transactionSubtitle);
-            TextView amountText = view.findViewById(R.id.transactionAmount);
-
-            titleText.setText(title);
-            subtitleText.setText(category);
-            amountText.setText(amount);
-            amountText.setTextColor(isIncome ? Color.parseColor("#2E7D32") : Color.parseColor("#1A1A1A"));
-
-            int iconColor = getIconColor(category, isIncome);
-            icon.setImageResource(getIconResource(category, isIncome));
-            icon.setImageTintList(ColorStateList.valueOf(iconColor));
-            icon.setBackground(createCircle(getCircleColor(category, isIncome)));
-
-            return view;
-        }
-
-        private static String getCategoryFromTitle(String title) {
-            int divider = title.indexOf(":");
-            if (divider > 0) {
-                return title.substring(0, divider);
-            }
-            return title;
-        }
-
-        private static int getIconResource(String category, boolean isIncome) {
-            if (isIncome) {
-                return R.drawable.ic_trending_up;
-            }
-            if (category.equals("Food")) {
-                return R.drawable.ic_food;
-            }
-            if (category.equals("School")) {
-                return R.drawable.ic_school;
-            }
-            if (category.equals("Travel")) {
-                return R.drawable.ic_travel;
-            }
-            if (category.equals("Subscriptions")) {
-                return R.drawable.ic_subscriptions;
-            }
-            return R.drawable.ic_other;
-        }
-
-        private static int getCircleColor(String category, boolean isIncome) {
-            if (isIncome || category.equals("Food")) {
-                return Color.parseColor("#E8F5E9");
-            }
-            if (category.equals("School")) {
-                return Color.parseColor("#EDE9FF");
-            }
-            if (category.equals("Travel")) {
-                return Color.parseColor("#E3F2FD");
-            }
-            return Color.parseColor("#FFF3E0");
-        }
-
-        private static int getIconColor(String category, boolean isIncome) {
-            if (isIncome || category.equals("Food")) {
-                return Color.parseColor("#2E7D32");
-            }
-            if (category.equals("School")) {
-                return Color.parseColor("#4B2FD4");
-            }
-            if (category.equals("Travel")) {
-                return Color.parseColor("#1565C0");
-            }
-            return Color.parseColor("#E65100");
-        }
-
-        private static GradientDrawable createCircle(int color) {
-            GradientDrawable drawable = new GradientDrawable();
-            drawable.setShape(GradientDrawable.OVAL);
-            drawable.setColor(color);
-            return drawable;
-        }
-    }
-
 }
+

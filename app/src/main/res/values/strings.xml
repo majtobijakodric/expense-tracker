@@ -19,4 +19,6 @@
     <string name="balance_label">Balance</string>
     <string name="category_label">Category</string>
     <string name="expenses_tracker">Expenses tracker</string>
+    <string name="see_all">See all</string>
+    <string name="all_transactions">All Transactions</string>
 </resources>

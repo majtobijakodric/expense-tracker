@@ -319,10 +319,12 @@
                     android:drawablePadding="2dp"
                     android:drawableTint="@color/primary"
                     android:gravity="center"
-                    android:text="See all"
+                    android:text="@string/see_all"
                     android:textColor="@color/primary"
-                    android:textSize="13sp" />
-                <!-- TODO: Step 2 - implement See all navigation -->
+                    android:textSize="13sp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
