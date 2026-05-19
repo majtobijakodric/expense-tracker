@@ -34,19 +34,24 @@ A clean Android expense tracking app built with Java, Android SDK, Material Comp
 
 ## Screenshots
 
-![Empty State](assets/empty_page.jpg)
+<img src="assets/empty_page.jpg" alt="Empty State" width="320">
+
 *Fresh app state with empty totals, the expense form, and no recent transactions yet.*
 
-![Expense Entry](assets/exprense.jpg)
+<img src="assets/exprense.jpg" alt="Expense Entry" width="320">
+
 *Expense mode with the category selector visible for logging categorized spending.*
 
-![Income Entry](assets/income.jpg)
+<img src="assets/income.jpg" alt="Income Entry" width="320">
+
 *Income mode with the category field hidden and the overview totals updated.*
 
-![All Transactions](assets/all_transactions.jpg)
+<img src="assets/all_transactions.jpg" alt="All Transactions" width="320">
+
 *Full transaction history screen showing saved entries in newest-first order.*
 
-![Clear All Transactions](assets/clear_all_transactions.jpg)
+<img src="assets/clear_all_transactions.jpg" alt="Clear All Transactions" width="320">
+
 *Confirmation dialog shown before all local transaction records are deleted.*
 
 ---
